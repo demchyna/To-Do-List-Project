@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New User registration</title>
+</head>
+<body>
+    <div th:replace="header"></div>
+    <h2>New User registration</h2>
+    <form th:action="@{/users/create}" th:object="${user}" method="post">
+    <table>
+        <tr>
+            <td>
+                <label for="first-name">First name:</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{firstName}" id="first-name" />
+            </td>
+            <td>
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="last-name">Last name:</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{lastName}" id="last-name" />
+            </td>
+            <td>
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="email">E-mail:</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{email}" id="email" />
+            </td>
+            <td>
+                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="password">Password:</label>
+            </td>
+            <td>
+                <input type="password" th:field="*{password}" id="password" />
+            </td>
+            <td>
+                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Register" />
+                <input type="reset" value="Clear" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</body>
+</html>

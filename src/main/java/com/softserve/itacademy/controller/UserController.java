@@ -50,14 +50,18 @@ public class UserController {
 
     @PostMapping("/{id}/update")
     public String update(@PathVariable long id, @RequestParam("oldPassword") String oldPassword,
-                         @RequestParam("roleId") long roleId, @Validated @ModelAttribute("user") User user,
-                         BindingResult result) {
+                         @RequestParam("roleId") long roleId, Model model,
+                         @Validated @ModelAttribute("user") User user, BindingResult result) {
         User oldUser = userService.readById(id);
         if (result.hasErrors()) {
+            user.setRole(roleService.readById(2));
+            model.addAttribute("roles", roleService.getAll());
             return "update-user";
         }
         if (!oldUser.getPassword().equals(oldPassword)) {
             result.addError(new FieldError("user", "password", "Old password is not correct!"));
+            user.setRole(roleService.readById(2));
+            model.addAttribute("roles", roleService.getAll());
             return "update-user";
         }
         user.setRole(roleService.readById(roleId));

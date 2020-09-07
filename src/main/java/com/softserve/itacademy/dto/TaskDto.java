@@ -1,10 +1,21 @@
 package com.softserve.itacademy.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class TaskDto {
     private long id;
+
+    @NotBlank(message = "The 'name' cannot be empty")
     private String name;
+
+    @NotNull
     private String priority;
+
+    @NotNull
     private long todoId;
+
+    @NotNull
     private long stateId;
 
     public TaskDto() {

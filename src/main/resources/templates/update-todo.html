@@ -37,6 +37,7 @@
         </table>
         <input type="hidden" name="id" th:value="*{id}">
         <input type="hidden" th:field="*{createdAt}" th:value="*{createdAt}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     </form>
     <br>
     <a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to To-Do List</a>

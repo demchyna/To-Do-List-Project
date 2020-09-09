@@ -69,6 +69,7 @@
         </table>
         <input type="hidden" name="id" th:value="*{id}">
         <input type="hidden" name="todoId" th:value="${task.todoId}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     </form>
     <br>
     <a th:href="@{|/todos/${task.todoId}/read|}">Go to Task List</a>

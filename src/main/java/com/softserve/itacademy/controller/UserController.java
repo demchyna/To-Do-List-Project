@@ -1,14 +1,13 @@
 package com.softserve.itacademy.controller;
 
-import com.softserve.itacademy.model.ToDo;
 import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.service.RoleService;
 import com.softserve.itacademy.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +17,12 @@ public class UserController {
 
     private UserService userService;
     private RoleService roleService;
+    private PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService, RoleService roleService) {
+    public UserController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/create")
@@ -35,6 +36,7 @@ public class UserController {
         if (result.hasErrors()) {
             return "create-user";
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(roleService.readById(2));
         User newUser = userService.create(user);
         return "redirect:/todos/all/users/" + newUser.getId();
@@ -58,12 +60,13 @@ public class UserController {
             model.addAttribute("roles", roleService.getAll());
             return "update-user";
         }
-        if (!oldUser.getPassword().equals(oldPassword)) {
+        if (!passwordEncoder.matches(oldUser.getPassword(), oldPassword)) {
             result.addError(new FieldError("user", "password", "Old password is not correct!"));
             user.setRole(roleService.readById(2));
             model.addAttribute("roles", roleService.getAll());
             return "update-user";
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(roleService.readById(roleId));
         userService.update(user);
         return "redirect:/users/all";

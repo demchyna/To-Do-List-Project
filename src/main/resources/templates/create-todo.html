@@ -27,6 +27,7 @@
                 </td>
             </tr>
         </table>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
     </form>
     <br>
     <a th:href="@{|/todos/all/users/${ownerId}|}">Go to To-Do List</a>

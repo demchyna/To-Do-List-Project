@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:replace="header"></div>
+    <div style="margin: 0 auto; width: max-content">
+        <h2>Info about User</h2>
+        <table>
+            <tr>
+                <td>Id: </td>
+                <td>
+                    <b th:text="${user.id}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>First name:</td>
+                <td>
+                    <b th:text="${user.firstName}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>Last name</td>
+                <td>
+                    <b th:text="${user.lastName}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>E-mail:</td>
+                <td>
+                    <b th:text="${user.email}"></b>
+                </td>
+            </tr>
+            <tr>
+                <td>Role: </td>
+                <td>
+                    <b th:text="${user.role.name}"></b>
+                </td>
+            </tr>
+        </table>
+        <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
+                    or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == user.id}">
+            <a th:href="@{|/users/${user.id}/update|}">Edit</a> |
+            <a th:href="@{|/users/${user.id}/delete|}">Remove</a>
+        </div>
+    </div>
+</body>
+</html>

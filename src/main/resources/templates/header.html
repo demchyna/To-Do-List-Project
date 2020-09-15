@@ -1,17 +1,19 @@
 <div xmlns:th="http://www.thymeleaf.org"
-     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+     sec:authorize="isAuthenticated()">
     <div>
         <a th:href="@{/}">Home Page</a> |
-        <a th:href="@{/users/all}">List of Users</a>
+        <a th:href="@{|/todos/all/users/${#authentication.details.id}|}">My To-Dos</a>
+        <span sec:authorize="hasAuthority('ADMIN')">
+           | <a th:href="@{/users/all}">List of Users</a>
+        </span>
     </div>
-    <div sec:authorize="isAuthenticated()" style="position: absolute; top: 10px; right: 20px;">
+    <div style="position: absolute; top: 10px; right: 20px;">
         <span>
-            Hello <a th:href="@{|/user/${#authentication.details.id}|}" th:text="${#authentication.details.firstName}"></a>!
+            Hello <a th:href="@{|/users/${#authentication.details.id}/read|}" th:text="${#authentication.details.firstName}"></a>!
         </span> |
         <form th:action="@{/logout}" method="post" style="display: inline-block">
             <input type="submit" value="LogOut">
         </form>
     </div>
-
 </div>

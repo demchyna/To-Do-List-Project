@@ -1,49 +1,81 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Read existing To-Do</title>
 </head>
 <body>
     <div th:replace="header"></div>
-    <h2 th:text="${'All Tasks from ' + todo.title}"></h2>
-    <form th:action="@{|/tasks/create/todos/${todo.id}|}" method="get" style="display: inline-block; margin-right: 20px">
-        <input type="submit" value="Create Task">
-    </form>
-    <form th:action="@{/todos/{id}/add(id = ${todo.id})}" method="get" style="display: inline-block">
-        <label for="users">Add Collaborators:</label>
-        <select name="user_id" id="users">
-            <option>Select collaborator...</option>
-            <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName + ' ' + user.lastName}" />
-        </select>
-        <input type="submit" value="Add">
-    </form>
-    <br>
-    <br>
-    <table border="1">
-        <tr>
-            <th>No.</th>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Priority</th>
-            <th>State</th>
-            <th colspan="2">Operations</th>
-        </tr>
-        <tr th:each="task, iStat: ${tasks}">
-            <td th:text="${iStat.index + 1}" />
-            <td th:text="${task.id}" />
-            <td th:text="${task.name}" />
-            <td th:text="${task.priority.name().substring(0, 1) + task.priority.name().substring(1).toLowerCase()}"/>
-            <td th:text="${task.state.name}"/>
-            <td>
-                <a th:href="@{|/tasks/${task.id}/update/todos/${todo.id}|}">Edit</a>
-            </td>
-            <td>
-                <a th:href="@{|/tasks/${task.id}/delete/todos/${todo.id}|}">Remove</a>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to To-Do List</a>
+    <div style="margin: 0 auto; width: max-content">
+        <h2 th:text="${'All Tasks from ' + todo.title}"></h2>
+        <form th:action="@{|/tasks/create/todos/${todo.id}|}" method="get" style="display: inline-block; margin-right: 20px">
+            <input type="submit" value="Create Task">
+        </form>
+        <span th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
+                    or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
+        <form th:action="@{/todos/{id}/add(id = ${todo.id})}" method="get" style="display: inline-block">
+            <label for="users">Collaborators:</label>
+            <select name="user_id" id="users">
+                <option>Select collaborator...</option>
+                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.firstName + ' ' + user.lastName}" />
+            </select>
+            <input type="submit" value="Add">
+        </form>
+    </span>
+        <br>
+        <br>
+        <table border="1">
+            <tr>
+                <th>No.</th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Priority</th>
+                <th>State</th>
+                <th colspan="2">Operations</th>
+            </tr>
+            <tr th:each="task, iStat: ${tasks}">
+                <td th:text="${iStat.index + 1}" />
+                <td th:text="${task.id}" />
+                <td th:text="${task.name}" />
+                <td th:text="${task.priority.name().substring(0, 1) + task.priority.name().substring(1).toLowerCase()}"/>
+                <td th:text="${task.state.name}"/>
+                <td>
+                    <a th:href="@{|/tasks/${task.id}/update/todos/${todo.id}|}">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{|/tasks/${task.id}/delete/todos/${todo.id}|}">Remove</a>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <table>
+            <tr>
+                <td style="vertical-align: top">
+                    <b>Collaborators:</b>
+                </td>
+                <td>
+                    <table border="1">
+                        <tr th:each="collaborator, iStat: ${todo.collaborators}">
+                            <td th:text="${iStat.index + 1}" />
+                            <td>
+                                <a th:href="@{|/users/${collaborator.id}/read|}" th:text="${collaborator.firstName + ' ' + collaborator.lastName}" />
+                            </td>
+                            <td th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
+                                    or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
+                                <a th:href="@{/todos/{id}/remove(id = ${todo.id}, user_id = ${collaborator.id})}">Remove</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <span th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
+                    or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
+            <a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to To-Do List</a>
+        </span>
+    </div>
 </body>
 </html>

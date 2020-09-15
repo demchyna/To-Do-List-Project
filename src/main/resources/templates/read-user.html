@@ -1,42 +1,60 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Read existing User</title>
 </head>
 <body>
     <div th:replace="header"></div>
-    <h2 th:text="${'All To-Dos of ' + user.firstName + ' ' + user.lastName}"/>
-    <form th:action="@{|/todos/create/users/${user.id}|}" method="get">
-        <input type="submit" value="Create To-Do">
-    </form>
-    <br>
-    <table border="1">
-        <tr>
-            <th>No.</th>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Created At</th>
-            <th>Owner</th>
-            <th colspan="2">Operations</th>
-        </tr>
-        <tr th:each="todo, iStat: ${todos}">
-            <td th:text="${iStat.index + 1}" />
-            <td th:text="${todo.id}" />
-            <td>
-                <a th:href="@{|/todos/${todo.id}/read|}" th:text="${todo.title}" />
-            </td>
-            <td th:text="${#temporals.format(todo.createdAt, 'dd.MM.yyyy HH:mm')}"/>
-            <td th:text="${todo.getOwner().firstName + ' ' + todo.getOwner().lastName}"></td>
-            <td>
-                <a th:href="@{|/todos/${todo.id}/update/users/${user_id}|}">Edit</a>
-            </td>
-            <td>
-                <a th:href="@{|/todos/${todo.id}/delete/users/${user_id}|}">Remove</a>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <a th:href="@{/users/all}">Go to Users List</a>
+    <div style="margin: 0 auto; width: max-content">
+        <h2 th:text="${'All To-Dos of ' + user.firstName + ' ' + user.lastName}"/>
+        <form th:action="@{|/todos/create/users/${user.id}|}" method="get">
+            <input type="submit" value="Create To-Do">
+        </form>
+        <br>
+        <table border="1">
+            <tr>
+                <th>No.</th>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Created At</th>
+                <th>Owner</th>
+                <th colspan="2">Operations</th>
+            </tr>
+            <tr th:each="todo, iStat: ${todos}">
+                <td th:text="${iStat.index + 1}" />
+                <td th:text="${todo.id}" />
+                <td>
+                    <a th:href="@{|/todos/${todo.id}/read|}" th:text="${todo.title}" />
+                </td>
+                <td th:text="${#temporals.format(todo.createdAt, 'dd.MM.yyyy HH:mm')}"/>
+                <td th:text="${todo.getOwner().firstName + ' ' + todo.getOwner().lastName}"></td>
+                <span th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
+                    or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
+                <td>
+                    <a th:href="@{|/todos/${todo.id}/update/users/${todo.owner.id}|}">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{|/todos/${todo.id}/delete/users/${todo.owner.id}|}">Remove</a>
+                </td>
+            </span>
+                <span th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')
+                    or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
+                <td>
+                    <a style="color: gray; cursor: pointer"><u>Edit</u></a>
+                </td>
+                <td>
+                    <a style="color: gray; cursor: pointer"><u>Remove</u></a>
+                </td>
+            </span>
+            </tr>
+        </table>
+        <br>
+        <span sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/users/all}">Go to Users List</a>
+        </span>
+    </div>
 </body>
 </html>

@@ -1,8 +1,11 @@
 package com.softserve.itacademy.controller;
 
 import com.softserve.itacademy.model.User;
+import com.softserve.itacademy.security.WebAuthenticationToken;
 import com.softserve.itacademy.service.RoleService;
 import com.softserve.itacademy.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
-    private RoleService roleService;
-    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
     public UserController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
@@ -25,12 +28,14 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or isAnonymous()")
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("user", new User());
         return "create-user";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or isAnonymous()")
     @PostMapping("/create")
     public String create(@Validated @ModelAttribute("user") User user, BindingResult result) {
         if (result.hasErrors()) {
@@ -42,6 +47,15 @@ public class UserController {
         return "redirect:/todos/all/users/" + newUser.getId();
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}/read")
+    public String read(@PathVariable long id, Model model) {
+        User user = userService.readById(id);
+        model.addAttribute("user", user);
+        return "user-info";
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.details.id == #id")
     @GetMapping("/{id}/update")
     public String update(@PathVariable long id, Model model) {
         User user = userService.readById(id);
@@ -50,6 +64,7 @@ public class UserController {
         return "update-user";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.details.id == #id")
     @PostMapping("/{id}/update")
     public String update(@PathVariable long id, @RequestParam("oldPassword") String oldPassword,
                          @RequestParam("roleId") long roleId, Model model,
@@ -60,7 +75,7 @@ public class UserController {
             model.addAttribute("roles", roleService.getAll());
             return "update-user";
         }
-        if (!passwordEncoder.matches(oldUser.getPassword(), oldPassword)) {
+        if (!passwordEncoder.matches(oldPassword, oldUser.getPassword())) {
             result.addError(new FieldError("user", "password", "Old password is not correct!"));
             user.setRole(roleService.readById(2));
             model.addAttribute("roles", roleService.getAll());
@@ -72,12 +87,21 @@ public class UserController {
         return "redirect:/users/all";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.details.id == #id")
     @GetMapping("/{id}/delete")
     public String delete(@PathVariable("id") long id) {
+        WebAuthenticationToken authentication = (WebAuthenticationToken) SecurityContextHolder.getContext()
+                .getAuthentication();
+        if (((User)authentication.getDetails()).getId() == id) {
+            userService.delete(id);
+            SecurityContextHolder.clearContext();
+            return "redirect:/login-form";
+        }
         userService.delete(id);
         return "redirect:/users/all";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all")
     public String getAll(Model model) {
         model.addAttribute("users", userService.getAll());

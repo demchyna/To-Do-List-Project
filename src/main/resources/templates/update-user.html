@@ -1,101 +1,105 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Update existing User</title>
 </head>
 <body>
     <div th:replace="header"></div>
-    <h2>Update existing User</h2>
-    <form th:object="${user}" method="post">
-        <table>
-            <tr>
-                <td>
-                    <label for="id">Id:</label>
-                </td>
-                <td>
-                    <input type="text" th:field="*{id}" id="id" th:value="*{id}" disabled/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="first-name">First name:</label>
-                </td>
-                <td>
-                    <input type="text" th:field="*{firstName}" id="first-name" th:value="*{firstName}" />
-                </td>
-                <td>
-                    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="last-name">Last name:</label>
-                </td>
-                <td>
-                    <input type="text" th:field="*{lastName}" id="last-name" th:value="*{lastName}" />
-                </td>
-                <td>
-                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="email">E-mail:</label>
-                </td>
-                <td>
-                    <input type="text" th:field="*{email}" id="email" th:value="*{email}" />
-                </td>
-                <td>
-                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="old-password">Old Password:</label>
-                </td>
-                <td>
-                    <input type="password" name="oldPassword" id="old-password" required />
-                </td>
-                <td>
-                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="new-password">New Password:</label>
-                </td>
-                <td>
-                    <input type="password" th:field="*{password}" id="new-password" required />
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="role">Role:</label>
-                </td>
-                <td>
-                    <select name="roleId" id="role">
+    <div style="margin: 0 auto; width: max-content">
+        <h2>Update existing User</h2>
+        <form th:object="${user}" method="post">
+            <table>
+                <tr>
+                    <td>
+                        <label for="id">Id:</label>
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{id}" id="id" th:value="*{id}" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="first-name">First name:</label>
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{firstName}" id="first-name" th:value="*{firstName}" />
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="last-name">Last name:</label>
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{lastName}" id="last-name" th:value="*{lastName}" />
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="email">E-mail:</label>
+                    </td>
+                    <td>
+                        <input type="text" th:field="*{email}" id="email" th:value="*{email}" />
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="old-password">Old Password:</label>
+                    </td>
+                    <td>
+                        <input type="password" name="oldPassword" id="old-password" required />
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="new-password">New Password:</label>
+                    </td>
+                    <td>
+                        <input type="password" th:field="*{password}" id="new-password" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="role">Role:</label>
+                    </td>
+                    <td>
+                        <select name="roleId" id="role">
                         <span th:each="role : ${roles}">
                             <option th:if="${role.id == user.role.id}" th:value="${role.id}" th:selected="${true}"
                                     th:text="${role.name.substring(0, 1) + role.name.substring(1).toLowerCase()}" />
                             <option th:unless="${role.id == user.role.id}" th:value="${role.id}"
                                     th:text="${role.name.substring(0, 1) + role.name.substring(1).toLowerCase()}" />
                         </span>
-                    </select>
-                </td>
-                <td>
-                    <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="submit" value="Update" />
-                    <input type="reset" value="Clear" />
-                </td>
-            </tr>
-        </table>
-        <input type="hidden" name="id" th:value="*{id}">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    </form>
+                        </select>
+                    </td>
+                    <td>
+                        <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="Update" />
+                        <input type="reset" value="Clear" />
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="id" th:value="*{id}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        </form>
+    </div>
 </body>
 </html>

@@ -45,8 +45,7 @@
             <input type="hidden" name="todoId" th:value="${todo.id}">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
-        <br>
-        <a th:href="@{|/todos/${todo.id}/read|}">Go to Task List</a>
     </div>
+    <a th:href="@{|/todos/${todo.id}/read|}">Go to Task List</a>
 </body>
 </html>

@@ -71,11 +71,10 @@
                 </td>
             </tr>
         </table>
-        <br>
-        <span th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
-                    or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
-            <a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to To-Do List</a>
-        </span>
     </div>
+    <span th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
+                or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
+        <a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to To-Do List</a>
+    </span>
 </body>
 </html>

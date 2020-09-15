@@ -51,10 +51,9 @@
             </span>
             </tr>
         </table>
-        <br>
-        <span sec:authorize="hasAuthority('ADMIN')">
-            <a th:href="@{/users/all}">Go to Users List</a>
-        </span>
     </div>
+    <span sec:authorize="hasAuthority('ADMIN')">
+        <a th:href="@{/users/all}">Go to Users List</a>
+    </span>
 </body>
 </html>

@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    @Query(value = "select * from tasks where todo_id =?1", nativeQuery = true)
+    @Query(value = "select * from tasks where todo_id = ?1", nativeQuery = true)
     List<Task> getByTodoId(long todoId);
 }

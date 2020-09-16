@@ -59,6 +59,15 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
+    public State getByName(String name) {
+        Optional<State> optional = Optional.ofNullable(stateRepository.getByName(name));
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        throw new EntityNotFoundException("State with name '" + name + "' not found");
+    }
+
+    @Override
     public List<State> getAll() {
         List<State> states = stateRepository.getAll();
         return states.isEmpty() ? new ArrayList<>() : states;

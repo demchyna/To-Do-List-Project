@@ -48,7 +48,7 @@ public class TaskController {
         Task task = TaskTransformer.convertToEntity(
                 taskDto,
                 todoService.readById(taskDto.getTodoId()),
-                stateService.readById(1)
+                stateService.getByName("New")
         );
         taskService.create(task);
         return "redirect:/todos/" + todoId + "/read";

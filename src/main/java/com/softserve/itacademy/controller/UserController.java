@@ -71,20 +71,24 @@ public class UserController {
                          @Validated @ModelAttribute("user") User user, BindingResult result) {
         User oldUser = userService.readById(id);
         if (result.hasErrors()) {
-            user.setRole(roleService.readById(2));
+            user.setRole(oldUser.getRole());
             model.addAttribute("roles", roleService.getAll());
             return "update-user";
         }
         if (!passwordEncoder.matches(oldPassword, oldUser.getPassword())) {
             result.addError(new FieldError("user", "password", "Old password is not correct!"));
-            user.setRole(roleService.readById(2));
+            user.setRole(oldUser.getRole());
             model.addAttribute("roles", roleService.getAll());
             return "update-user";
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(roleService.readById(roleId));
+        if (oldUser.getRole().getName().equals("USER")) {
+            user.setRole(oldUser.getRole());
+        } else {
+            user.setRole(roleService.readById(roleId));
+        }
         userService.update(user);
-        return "redirect:/users/all";
+        return "redirect:/users/" + id + "/read";
     }
 
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.details.id == #id")

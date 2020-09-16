@@ -72,7 +72,7 @@
                         <input type="password" th:field="*{password}" id="new-password" required />
                     </td>
                 </tr>
-                <tr>
+                <tr th:if="${#authentication.details.role.name == 'ADMIN'}">
                     <td>
                         <label for="role">Role:</label>
                     </td>
@@ -97,7 +97,8 @@
                     </td>
                 </tr>
             </table>
-            <input type="hidden" name="id" th:value="*{id}">
+            <input th:unless="${#authentication.details.role.name == 'ADMIN'}" type="hidden" name="roleId" value="0" />
+            <input type="hidden" name="id" th:value="*{id}" />
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
     </div>

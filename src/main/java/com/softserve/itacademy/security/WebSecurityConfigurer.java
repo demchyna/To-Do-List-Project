@@ -31,14 +31,11 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/login-form").permitAll()
                 .antMatchers("/users/create").permitAll()
                 .anyRequest().authenticated();
-//                .and().csrf().disable();
 
         http.addFilterAt(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.exceptionHandling().authenticationEntryPoint(
                 (request, response, authException) -> response.sendRedirect("/login-form"));
-        http.exceptionHandling().accessDeniedHandler(
-                (request, response, accessDeniedException) -> response.sendRedirect("/forbidden"));
     }
 
     @Bean("bCrypt")

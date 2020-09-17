@@ -24,8 +24,8 @@ public class ToDoServiceImpl implements ToDoService {
     public ToDo create(ToDo todo) {
         try {
             return todoRepository.save(todo);
-        } catch (IllegalArgumentException e) {
-            throw new NullEntityReferenceException("ToDo cannot be 'null'");
+        } catch (RuntimeException e) {
+            throw new NullEntityReferenceException("To-Do cannot be 'null'");
         }
     }
 

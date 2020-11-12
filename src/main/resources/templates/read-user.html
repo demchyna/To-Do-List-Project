@@ -33,22 +33,22 @@
                 <td th:text="${todo.getOwner().firstName + ' ' + todo.getOwner().lastName}"></td>
                 <span th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
                     or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
-                <td>
-                    <a th:href="@{|/todos/${todo.id}/update/users/${todo.owner.id}|}">Edit</a>
-                </td>
-                <td>
-                    <a th:href="@{|/todos/${todo.id}/delete/users/${todo.owner.id}|}">Remove</a>
-                </td>
-            </span>
+                    <td>
+                        <a th:href="@{|/todos/${todo.id}/update/users/${todo.owner.id}|}">Edit</a>
+                    </td>
+                    <td>
+                        <a th:href="@{|/todos/${todo.id}/delete/users/${todo.owner.id}|}">Remove</a>
+                    </td>
+                </span>
                 <span th:unless="${#authorization.expression('hasAuthority(''ADMIN'')')
                     or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
-                <td>
-                    <a style="color: gray; cursor: pointer"><u>Edit</u></a>
-                </td>
-                <td>
-                    <a style="color: gray; cursor: pointer"><u>Remove</u></a>
-                </td>
-            </span>
+                    <td>
+                        <a style="color: gray; cursor: pointer"><u>Edit</u></a>
+                    </td>
+                    <td>
+                        <a style="color: gray; cursor: pointer"><u>Remove</u></a>
+                    </td>
+                </span>
             </tr>
         </table>
     </div>

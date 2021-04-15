@@ -44,7 +44,8 @@ public class ToDoController {
 
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER') and authentication.details.id == #ownerId")
     @PostMapping("/create/users/{owner_id}")
-    public String create(@PathVariable("owner_id") long ownerId, @Validated @ModelAttribute("todo") ToDo todo, BindingResult result) {
+    public String create(@PathVariable("owner_id") long ownerId,
+                         @Validated @ModelAttribute("todo") ToDo todo, BindingResult result) {
         if (result.hasErrors()) {
             return "create-todo";
         }
@@ -60,7 +61,10 @@ public class ToDoController {
         ToDo todo = todoService.readById(id);
         List<Task> tasks = taskService.getByTodoId(id);
         List<User> users = userService.getAll().stream()
-                .filter(user -> user.getId() != todo.getOwner().getId()).collect(Collectors.toList());
+                .filter(user -> user.getId() != todo.getOwner().getId())
+                .filter(user -> todo.getCollaborators().stream().allMatch((collaborator)
+                        -> collaborator.getId() != user.getId()))
+                .collect(Collectors.toList());
         model.addAttribute("todo", todo);
         model.addAttribute("tasks", tasks);
         model.addAttribute("users", users);

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <title>All Tasks of ToDo List</title>
+</head>
+<body>
+<div th:replace="header"></div>
+<div class="col-md-offset-2 col-sm-8">
+    <h2 th:text="${'All Tasks From ' + todo.title}"></h2>
+
+    <form class="form-horizontal" th:action="@{|/tasks/create/todos/${todo.id}|}" method="get">
+        <div align="right">
+            <input class="btn-info btn-lg" type="submit" value="Create Task">
+        </div>
+    </form>
+
+
+    <br>
+    <h3>Tasks:</h3>
+    <table class="table">
+        <tr>
+            <th>No.</th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Priority</th>
+            <th>State</th>
+            <th colspan="2">Operations</th>
+        </tr>
+        <tr th:each="task, iStat: ${tasks}">
+            <td th:text="${iStat.index + 1}"/>
+            <td th:text="${task.id}"/>
+            <td th:text="${task.name}"/>
+            <td th:text="${task.priority.name().substring(0, 1) + task.priority.name().substring(1).toLowerCase()}"/>
+            <td th:text="${task.state.name}"/>
+            <td>
+                <a th:href="@{|/tasks/${task.id}/update/todos/${todo.id}|}">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{|/tasks/${task.id}/delete/todos/${todo.id}|}">Remove</a>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <h3>Collaborators:</h3>
+    <span>
+        <form class="form-horizontal" th:action="@{/todos/{id}/add(id = ${todo.id})}" method="get">
+            <select class="form-control" name="user_id" id="users">
+                <option>Select collaborator...</option>
+                <option th:each="user : ${users}" th:value="${user.id}"
+                        th:text="${user.firstName + ' ' + user.lastName}"></option>
+            </select>
+            <input align="right" class="btn btn" type="submit" value="Add">
+        </form>
+    </span>
+    <br>
+    <table class="table">
+        <tr th:each="collaborator, iStat: ${todo.collaborators}">
+            <td th:text="${iStat.index + 1}"/>
+            <td>
+                <a th:href="@{|/todos/all/users/${collaborator.id}|}"
+                   th:text="${collaborator.firstName + ' ' + collaborator.lastName}"/>
+            </td>
+            <td>
+                <a th:href="@{/todos/{id}/remove(id = ${todo.id}, user_id = ${collaborator.id})}">Remove</a>
+            </td>
+        </tr>
+    </table>
+
+    <span>
+        <a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to ToDo Lists</a>
+    </span>
+</div>
+</body>
+</html>

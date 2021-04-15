@@ -10,9 +10,9 @@ import java.util.List;
 @Repository
 public interface StateRepository extends JpaRepository<State, Long> {
 
-    @Query(value = "select * from states where name = ?1", nativeQuery = true)
-    State getByName(String name);
+    State findByName(String name);
 
     @Query(value = "select * from states order by id", nativeQuery = true)
     List<State> getAll();
+
 }

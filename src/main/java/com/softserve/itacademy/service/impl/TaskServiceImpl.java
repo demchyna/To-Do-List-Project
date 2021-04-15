@@ -1,6 +1,7 @@
 package com.softserve.itacademy.service.impl;
 
 import com.softserve.itacademy.exception.NullEntityReferenceException;
+import com.softserve.itacademy.model.Role;
 import com.softserve.itacademy.model.Task;
 import com.softserve.itacademy.repository.TaskRepository;
 import com.softserve.itacademy.service.TaskService;
@@ -20,42 +21,31 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task create(Task user) {
-        try {
-            return taskRepository.save(user);
-        } catch (IllegalArgumentException e) {
-            throw new NullEntityReferenceException("Task cannot be 'null'");
+    public Task create(Task role) {
+        if (role != null) {
+            return taskRepository.save(role);
         }
+        throw new NullEntityReferenceException("Task cannot be 'null'");
     }
 
     @Override
     public Task readById(long id) {
-        Optional<Task> optional = taskRepository.findById(id);
-        if (optional.isPresent()) {
-            return optional.get();
-        }
-        throw new EntityNotFoundException("Task with id " + id + " not found");
+        return taskRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Task with id " + id + " not found"));
     }
 
     @Override
-    public Task update(Task task) {
-        if (task != null) {
-            Task oldTask = readById(task.getId());
-            if (oldTask != null) {
-                return taskRepository.save(task);
-            }
+    public Task update(Task role) {
+        if (role != null) {
+            readById(role.getId());
+            return taskRepository.save(role);
         }
         throw new NullEntityReferenceException("Task cannot be 'null'");
     }
 
     @Override
     public void delete(long id) {
-        Task task = readById(id);
-        if (task != null) {
-            taskRepository.delete(task);
-        } else {
-            throw new NullEntityReferenceException("Task cannot be 'null'");
-        }
+        taskRepository.delete(readById(id));
     }
 
     @Override
@@ -66,7 +56,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getByTodoId(long todoId) {
-        List<Task> tasks = taskRepository.getByTodoId(todoId);
-        return tasks.isEmpty() ? new ArrayList<>() : tasks;
+        return taskRepository.getByTodoId(todoId);
     }
 }

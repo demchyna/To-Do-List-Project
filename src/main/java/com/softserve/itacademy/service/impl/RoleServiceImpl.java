@@ -5,6 +5,7 @@ import com.softserve.itacademy.model.Role;
 import com.softserve.itacademy.model.User;
 import com.softserve.itacademy.repository.RoleRepository;
 import com.softserve.itacademy.service.RoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -23,46 +24,34 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role create(Role role) {
-        try {
+        if (role != null) {
             return roleRepository.save(role);
-        } catch (IllegalArgumentException e) {
-            throw new NullEntityReferenceException("Role cannot be 'null'");
         }
+        throw new NullEntityReferenceException("Role cannot be 'null'");
     }
 
     @Override
     public Role readById(long id) {
-        Optional<Role> optional = roleRepository.findById(id);
-        if (optional.isPresent()) {
-            return optional.get();
-        }
-        throw new EntityNotFoundException("Role with id " + id + " not found");
+        return roleRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Role with id " + id + " not found"));
     }
 
     @Override
     public Role update(Role role) {
         if (role != null) {
-            Role oldRole = readById(role.getId());
-            if (oldRole != null) {
-                return roleRepository.save(role);
-            }
+            readById(role.getId());
+            return roleRepository.save(role);
         }
         throw new NullEntityReferenceException("Role cannot be 'null'");
     }
 
     @Override
     public void delete(long id) {
-        Role role = readById(id);
-        if (role != null) {
-            roleRepository.delete(role);
-        } else {
-            throw new NullEntityReferenceException("Role cannot be 'null'");
-        }
+        roleRepository.delete(readById(id));
     }
 
     @Override
     public List<Role> getAll() {
-        List<Role> roles = roleRepository.findAll();
-        return roles.isEmpty() ? new ArrayList<>() : roles;
+        return roleRepository.findAll();
     }
 }

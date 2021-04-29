@@ -7,10 +7,11 @@ import com.softserve.itacademy.model.Task;
 import com.softserve.itacademy.service.StateService;
 import com.softserve.itacademy.service.TaskService;
 import com.softserve.itacademy.service.ToDoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
+
     private final TaskService taskService;
     private final ToDoService todoService;
     private final StateService stateService;
+
+    private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 
     public TaskController(TaskService taskService, ToDoService todoService, StateService stateService) {
         this.taskService = taskService;
@@ -52,6 +56,7 @@ public class TaskController {
                 stateService.getByName("New")
         );
         taskService.create(task);
+        logger.info("Task was created");
         return "redirect:/todos/" + todoId + "/read";
     }
 
@@ -80,6 +85,7 @@ public class TaskController {
                 stateService.readById(taskDto.getStateId())
         );
         taskService.update(task);
+        logger.info("Task was updated");
         return "redirect:/todos/" + todoId + "/read";
     }
 
@@ -87,6 +93,7 @@ public class TaskController {
     @GetMapping("/{task_id}/delete/todos/{todo_id}")
     public String delete(@PathVariable("task_id") long taskId, @PathVariable("todo_id") long todoId) {
         taskService.delete(taskId);
+        logger.info("Task was deleted");
         return "redirect:/todos/" + todoId + "/read";
     }
 }

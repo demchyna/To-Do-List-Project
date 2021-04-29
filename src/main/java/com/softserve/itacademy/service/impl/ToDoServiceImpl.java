@@ -20,9 +20,9 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     @Override
-    public ToDo create(ToDo role) {
-        if (role != null) {
-            return todoRepository.save(role);
+    public ToDo create(ToDo todo) {
+        if (todo != null) {
+            return todoRepository.save(todo);
         }
         throw new NullEntityReferenceException("ToDo cannot be 'null'");
     }
@@ -34,23 +34,23 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     @Override
-    public ToDo update(ToDo role) {
-        if (role != null) {
-            readById(role.getId());
-            return todoRepository.save(role);
+    public ToDo update(ToDo todo) {
+        if (todo != null) {
+            readById(todo.getId());
+            return todoRepository.save(todo);
         }
         throw new NullEntityReferenceException("ToDo cannot be 'null'");
     }
 
     @Override
     public void delete(long id) {
-        todoRepository.delete(readById(id));
+        ToDo todo = readById(id);
+        todoRepository.delete(todo);
     }
 
     @Override
     public List<ToDo> getAll() {
-        List<ToDo> todos = todoRepository.findAll();
-        return todos.isEmpty() ? new ArrayList<>() : todos;
+        return todoRepository.findAll();
     }
 
     @Override

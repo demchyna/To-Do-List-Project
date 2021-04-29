@@ -1,13 +1,16 @@
 package com.softserve.itacademy;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import com.softserve.itacademy.repository.StateRepositoryTest;
+import com.softserve.itacademy.repository.TaskRepositoryTest;
+import com.softserve.itacademy.repository.UserRepositoryTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.platform.suite.api.SelectClasses;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest
-class ToDoListApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
-
-}
+@ExtendWith(SpringExtension.class)
+@SelectClasses({
+        StateRepositoryTest.class,
+        TaskRepositoryTest.class,
+        UserRepositoryTest.class
+})
+class ToDoListApplicationTests {  }

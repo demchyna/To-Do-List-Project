@@ -21,9 +21,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task create(Task role) {
-        if (role != null) {
-            return taskRepository.save(role);
+    public Task create(Task task) {
+        if (task != null) {
+            return taskRepository.save(task);
         }
         throw new NullEntityReferenceException("Task cannot be 'null'");
     }
@@ -35,23 +35,23 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task update(Task role) {
-        if (role != null) {
-            readById(role.getId());
-            return taskRepository.save(role);
+    public Task update(Task task) {
+        if (task != null) {
+            readById(task.getId());
+            return taskRepository.save(task);
         }
         throw new NullEntityReferenceException("Task cannot be 'null'");
     }
 
     @Override
     public void delete(long id) {
-        taskRepository.delete(readById(id));
+        Task task = readById(id);
+        taskRepository.delete(task);
     }
 
     @Override
     public List<Task> getAll() {
-        List<Task> tasks = taskRepository.findAll();
-        return tasks.isEmpty() ? new ArrayList<>() : tasks;
+        return taskRepository.findAll();
     }
 
     @Override

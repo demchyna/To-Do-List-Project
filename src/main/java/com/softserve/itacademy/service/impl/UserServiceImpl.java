@@ -1,19 +1,16 @@
 package com.softserve.itacademy.service.impl;
 
 import com.softserve.itacademy.exception.NullEntityReferenceException;
-import com.softserve.itacademy.model.Role;
 import com.softserve.itacademy.model.User;
+import com.softserve.itacademy.repository.StateRepository;
 import com.softserve.itacademy.repository.UserRepository;
 import com.softserve.itacademy.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
@@ -49,7 +46,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(long id) {
-        userRepository.delete(readById(id));
+        User user = readById(id);
+        userRepository.delete(user);
     }
 
     @Override

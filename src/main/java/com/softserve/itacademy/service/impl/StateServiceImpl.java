@@ -46,7 +46,13 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public void delete(long id) {
-        stateRepository.delete(readById(id));
+        State state = readById(id);
+        stateRepository.delete(state);
+    }
+
+    @Override
+    public List<State> getAll() {
+        return stateRepository.getAll();
     }
 
     @Override
@@ -56,10 +62,5 @@ public class StateServiceImpl implements StateService {
             return optional.get();
         }
         throw new EntityNotFoundException("State with name '" + name + "' not found");
-    }
-
-    @Override
-    public List<State> getAll() {
-        return stateRepository.getAll();
     }
 }

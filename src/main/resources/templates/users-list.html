@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/template}"
+      lang="en">
 <head>
     <meta charset="UTF-8">
     <title>List of Users</title>
 </head>
 <body>
-    <div th:replace="header"></div>
-    <div style="margin: 0 auto; width: max-content">
+    <div layout:fragment="content" style="margin: 0 auto; width: max-content">
         <h2>List of Users</h2>
         <form th:action="@{/users/create}" method="get">
             <input type="submit" value="Create new User">

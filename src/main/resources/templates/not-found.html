@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/template}"
+      lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Not Found Page</title>
+    <title>Not Found</title>
 </head>
 <body>
-    <div th:replace="header"></div>
-    <br>
-    <h1 style="margin: 0 auto; width: max-content">404 / Not Found</h1>
-    <h2 style="margin: 0 auto; width: max-content" th:text="${error}"></h2>
+    <div layout:fragment="content">
+        <br>
+        <h1 style="margin: 0 auto; width: max-content">404 / Not Found</h1>
+        <h2 style="margin: 0 auto; width: max-content" th:text="${error}"></h2>
+    </div>
 </body>
 </html>

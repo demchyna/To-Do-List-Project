@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/template}"
       lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Read existing To-Do</title>
 </head>
 <body>
-    <div th:replace="header"></div>
-    <div style="margin: 0 auto; width: max-content">
+    <div layout:fragment="content" style="margin: 0 auto; width: max-content">
         <h2 th:text="${'All Tasks from ' + todo.title}"></h2>
         <form th:action="@{|/tasks/create/todos/${todo.id}|}" method="get" style="display: inline-block; margin-right: 20px">
             <input type="submit" value="Create Task">
@@ -71,10 +71,11 @@
                 </td>
             </tr>
         </table>
-    </div>
-    <span th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
+        <br>
+        <span th:if="${#authorization.expression('hasAuthority(''ADMIN'')')
                 or #authorization.expression('hasAuthority(''USER'')') and #authentication.details.id == todo.owner.id}">
-        <a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to To-Do List</a>
-    </span>
+            <a th:href="@{|/todos/all/users/${todo.owner.id}|}">Go to To-Do List</a>
+        </span>
+    </div>
 </body>
 </html>

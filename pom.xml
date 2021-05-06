@@ -16,8 +16,6 @@
 
     <properties>
         <java.version>11</java.version>
-
-<!--        <argLine>-Xmx1536m</argLine>-->
     </properties>
 
     <dependencies>
@@ -45,7 +43,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -76,19 +73,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite-api</artifactId>
-            <version>1.7.0</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
@@ -96,13 +85,11 @@
             <scope>test</scope>
         </dependency>
 
-
-
-        <!--        <dependency>-->
-<!--            <groupId>io.qameta.allure</groupId>-->
-<!--            <artifactId>allure-junit5</artifactId>-->
-<!--            <version>2.13.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+            <version>2.4.1</version>
+        </dependency>
 
     </dependencies>
 
@@ -120,7 +107,6 @@
                 <version>2.22.2</version>
                 <configuration>
                     <argLine>@{argLine} -Xmx1536m</argLine>
-<!--                    <argLine>-Xmx2048m -XX:MaxPermSize=256m</argLine>-->
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -150,21 +136,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-<!--            <plugin>-->
-<!--                <groupId>io.qameta.allure</groupId>-->
-<!--                <artifactId>allure-maven</artifactId>-->
-<!--                <version>2.10.0</version>-->
-<!--                <configuration>-->
-<!--                    <reportVersion>2.13.0</reportVersion>-->
-<!--                    <allureDownloadUrl>-->
-<!--                        https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.13.0/allure-commandline-2.13.0.zip-->
-<!--                    </allureDownloadUrl>-->
-<!--                    <resultsDirectory>${project.basedir}/allure-results</resultsDirectory>-->
-<!--                    <reportDirectory>${project.basedir}/allure-reports</reportDirectory>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
         </plugins>
     </build>
 

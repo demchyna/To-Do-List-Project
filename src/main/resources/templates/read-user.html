@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/template}"
       lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Read existing User</title>
+    <title>To-Dos of User</title>
 </head>
 <body>
-    <div th:replace="header"></div>
-    <div style="margin: 0 auto; width: max-content">
+    <div layout:fragment="content" style="margin: 0 auto; width: max-content">
         <h2 th:text="${'All To-Dos of ' + user.firstName + ' ' + user.lastName}"/>
         <form th:action="@{|/todos/create/users/${user.id}|}" method="get">
             <input type="submit" value="Create To-Do">
@@ -51,9 +52,10 @@
                 </span>
             </tr>
         </table>
+        <br>
+        <span sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/users/all}">Go to Users List</a>
+        </span>
     </div>
-    <span sec:authorize="hasAuthority('ADMIN')">
-        <a th:href="@{/users/all}">Go to Users List</a>
-    </span>
 </body>
 </html>

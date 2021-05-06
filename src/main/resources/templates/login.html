@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/template}"
+      lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>LogIn Page</title>
+    <title>Log-In</title>
 </head>
 <body>
-    <div style="margin: 0 auto; width: max-content">
-        <h2>LogIn Page</h2>
+    <div layout:fragment="content" style="margin: 0 auto; width: max-content">
+        <h2>Log-In Page</h2>
         <p th:if="${param.error}">Username or password is not correct!</p>
         <form th:action="@{/login}" method="POST">
             <table>

@@ -1,4 +1,4 @@
-package com.softserve.itacademy.security;
+package com.softserve.itacademy.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

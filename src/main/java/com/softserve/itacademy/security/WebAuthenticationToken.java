@@ -8,7 +8,7 @@ import java.util.Collection;
 
 public class WebAuthenticationToken implements Authentication {
 
-    private UserDetails userDetails;
+    private final UserDetails userDetails;
     private boolean isAuthenticated;
 
     public WebAuthenticationToken(UserDetails userDetails) {

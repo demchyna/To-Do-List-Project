@@ -60,6 +60,8 @@ public class UserControllerTest {
                 .andExpect(model().size(1))
                 .andExpect(model().attribute("user", new User()))
                 .andDo(print());
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -84,6 +86,8 @@ public class UserControllerTest {
         verify(passwordEncoder, times(1)).encode(anyString());
         verify(roleService, times(1)).readById(anyLong());
         verify(userService, times(1)).create(any(User.class));
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -108,6 +112,8 @@ public class UserControllerTest {
                 .andExpect(model().size(1))
                 .andExpect(model().attribute("user", user))
                 .andDo(print());
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -122,6 +128,10 @@ public class UserControllerTest {
                 .andExpect(model().size(1))
                 .andExpect(model().attribute("user", userWithRoleAdmin))
                 .andDo(print());
+
+        verify(userService, times(1)).readById(anyLong());
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -143,6 +153,11 @@ public class UserControllerTest {
                 .andExpect(model().attribute("user", userWithRoleUser))
                 .andExpect(model().attribute("roles", List.of(role1, role2)))
                 .andDo(print());
+
+        verify(userService, times(1)).readById(anyLong());
+        verify(roleService, times(1)).getAll();
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -171,6 +186,8 @@ public class UserControllerTest {
         verify(passwordEncoder, times(1)).encode(anyString());
         verify(roleService, never()).readById(anyLong());
         verify(userService, times(1)).update(any(User.class));
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -200,6 +217,8 @@ public class UserControllerTest {
         verify(passwordEncoder, times(1)).encode(anyString());
         verify(roleService, times(1)).readById(anyLong());
         verify(userService, times(1)).update(any(User.class));
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -235,6 +254,8 @@ public class UserControllerTest {
         verify(userService, times(1)).readById(anyLong());
         verify(passwordEncoder, times(1)).matches(anyString(), anyString());
         verify(roleService, times(1)).getAll();
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -275,6 +296,8 @@ public class UserControllerTest {
 
         verify(userService, times(1)).readById(anyLong());
         verify(roleService, times(1)).getAll();
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -287,6 +310,8 @@ public class UserControllerTest {
                 .andDo(print());
 
         verify(userService, times(1)).delete(anyLong());
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -299,6 +324,8 @@ public class UserControllerTest {
                 .andDo(print());
 
         verify(userService, times(1)).delete(anyLong());
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 
     @Test
@@ -316,5 +343,7 @@ public class UserControllerTest {
                 .andDo(print());
 
         verify(userService, times(1)).getAll();
+
+        verifyNoMoreInteractions(passwordEncoder, roleService, userService);
     }
 }

@@ -25,6 +25,10 @@ public class State {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -43,9 +47,9 @@ public class State {
 
     @Override
     public String toString() {
-        return "State {" +
+        return "State { " +
                 "id = " + id +
                 ", name = '" + name + '\'' +
-                "} ";
+                " }";
     }
 }

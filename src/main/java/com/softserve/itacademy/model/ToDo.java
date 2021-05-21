@@ -87,10 +87,10 @@ public class ToDo {
 
     @Override
     public String toString() {
-        return "ToDo {" +
+        return "ToDo { " +
                 "id = " + id +
                 ", title = '" + title + '\'' +
                 ", createdAt = " + createdAt +
-                "} ";
+                " }";
     }
 }

@@ -27,6 +27,10 @@ public class Role implements GrantedAuthority {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -45,10 +49,10 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return "Role {" +
+        return "Role { " +
                 "id = " + id +
                 ", name = '" + name + '\'' +
-                "} ";
+                " }";
     }
 
     @Override

@@ -1,21 +1,18 @@
 package com.softserve.itacademy.service.impl;
 
 import com.softserve.itacademy.exception.NullEntityReferenceException;
-import com.softserve.itacademy.model.Role;
 import com.softserve.itacademy.model.State;
 import com.softserve.itacademy.repository.StateRepository;
 import com.softserve.itacademy.service.StateService;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class StateServiceImpl implements StateService {
-    private StateRepository stateRepository;
+    private final StateRepository stateRepository;
 
     public StateServiceImpl(StateRepository stateRepository) {
         this.stateRepository = stateRepository;

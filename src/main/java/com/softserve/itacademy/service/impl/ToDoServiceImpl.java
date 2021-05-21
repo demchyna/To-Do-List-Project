@@ -7,13 +7,12 @@ import com.softserve.itacademy.service.ToDoService;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ToDoServiceImpl implements ToDoService {
 
-    private ToDoRepository todoRepository;
+    private final ToDoRepository todoRepository;
 
     public ToDoServiceImpl(ToDoRepository todoRepository) {
         this.todoRepository = todoRepository;

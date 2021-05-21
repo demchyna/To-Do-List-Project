@@ -2,7 +2,6 @@ package com.softserve.itacademy.service.impl;
 
 import com.softserve.itacademy.exception.NullEntityReferenceException;
 import com.softserve.itacademy.model.User;
-import com.softserve.itacademy.repository.StateRepository;
 import com.softserve.itacademy.repository.UserRepository;
 import com.softserve.itacademy.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +14,7 @@ import java.util.List;
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;

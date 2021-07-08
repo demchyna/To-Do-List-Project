@@ -20,7 +20,7 @@ public class SpringSecurityTestConfiguration {
         user.setId(1L);
         user.setFirstName("Mike");
         user.setLastName("Green");
-        user.setEmail("green@mail.com");
+        user.setEmail("mike@mail.com");
         user.setPassword("1111");
         user.setRole(role);
 
@@ -37,7 +37,7 @@ public class SpringSecurityTestConfiguration {
         user.setId(2L);
         user.setFirstName("Nick");
         user.setLastName("Brown");
-        user.setEmail("brown@mail.com");
+        user.setEmail("nick@mail.com");
         user.setPassword("2222");
         user.setRole(role);
 

@@ -28,14 +28,14 @@ public class ToDoRepositoryTest {
         User user1 = new User();
         user1.setFirstName("Mike");
         user1.setLastName("Green");
-        user1.setEmail("green@mail.com");
+        user1.setEmail("mike@mail.com");
         user1.setPassword("1111");
         user1 = userRepository.save(user1);
 
         User user2 = new User();
         user2.setFirstName("Nick");
         user2.setLastName("Brown");
-        user2.setEmail("brown@mail.com");
+        user2.setEmail("nick@mail.com");
         user2.setPassword("2222");
         user2 = userRepository.save(user2);
 
@@ -68,14 +68,14 @@ public class ToDoRepositoryTest {
         User user1 = new User();
         user1.setFirstName("Mike");
         user1.setLastName("Green");
-        user1.setEmail("green@mail.com");
+        user1.setEmail("mike@mail.com");
         user1.setPassword("1111");
         user1 = userRepository.save(user1);
 
         User user2 = new User();
         user2.setFirstName("Nick");
         user2.setLastName("Brown");
-        user2.setEmail("brown@mail.com");
+        user2.setEmail("nick@mail.com");
         user2.setPassword("2222");
         user2 = userRepository.save(user2);
 

@@ -23,18 +23,18 @@ public class UserRepositoryTest {
         User user1 = new User();
         user1.setFirstName("Mike");
         user1.setLastName("Green");
-        user1.setEmail("green@mail.com");
+        user1.setEmail("mike@mail.com");
         user1.setPassword("1111");
         userRepository.save(user1);
 
         User user2 = new User();
         user2.setFirstName("Nick");
         user2.setLastName("Brown");
-        user2.setEmail("brown@mail.com");
+        user2.setEmail("nick@mail.com");
         user2.setPassword("2222");
 
         User expected = userRepository.save(user2);
-        User actual = userRepository.findByEmail("brown@mail.com");
+        User actual = userRepository.findByEmail("nick@mail.com");
 
         assertEquals(expected, actual);
     }
@@ -44,11 +44,11 @@ public class UserRepositoryTest {
         User user = new User();
         user.setFirstName("Mike");
         user.setLastName("Green");
-        user.setEmail("green@mail.com");
+        user.setEmail("mike@mail.com");
         user.setPassword("1111");
         userRepository.save(user);
 
-        User actual = userRepository.findByEmail("brown@mail.com");
+        User actual = userRepository.findByEmail("nick@mail.com");
 
         assertNull(actual);
     }

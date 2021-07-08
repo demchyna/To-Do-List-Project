@@ -4,6 +4,7 @@ import com.softserve.itacademy.exception.NullEntityReferenceException;
 import com.softserve.itacademy.model.State;
 import com.softserve.itacademy.repository.StateRepository;
 import com.softserve.itacademy.service.StateService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -49,6 +50,7 @@ public class StateServiceImpl implements StateService {
 
     @Override
     public List<State> getAll() {
+//        return stateRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
         return stateRepository.getAll();
     }
 

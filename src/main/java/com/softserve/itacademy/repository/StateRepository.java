@@ -12,7 +12,8 @@ public interface StateRepository extends JpaRepository<State, Long> {
 
     State findByName(String name);
 
-    @Query(value = "select * from states order by id", nativeQuery = true)
+//    @Query(value = "select * from states order by id", nativeQuery = true)
+    @Query("select state from State state order by state.id")
     List<State> getAll();
 
 }

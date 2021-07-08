@@ -21,15 +21,11 @@ public class StateRepositoryTest {
 
     @Test
     public void testGetByName_1() {
-        State state1 = new State();
-        state1.setName("state #1");
-        stateRepository.save(state1);
-
         State state2 = new State();
-        state2.setName("state #2");
+        state2.setName("state #1");
 
         State expected = stateRepository.save(state2);
-        State actual = stateRepository.findByName("state #2");
+        State actual = stateRepository.findByName("state #1");
 
         assertEquals(expected, actual);
     }

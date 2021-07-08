@@ -50,7 +50,7 @@ public class UserControllerTest {
     private User userWithRoleUser;
 
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testCreateGetMethod() throws Exception {
         mvc.perform(get("/users/create")
                 .contentType(MediaType.TEXT_HTML))
@@ -64,7 +64,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testCorrectCreatePostMethod() throws Exception {
         when(passwordEncoder.encode(anyString())).thenReturn("");
         when(roleService.readById(anyLong())).thenReturn(new Role());
@@ -90,7 +90,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testErrorCreatePostMethod() throws Exception {
         User user = new User();
         user.setFirstName("");
@@ -116,7 +116,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testReadGetMethod() throws Exception {
         when(userService.readById(anyLong())).thenReturn(userWithRoleAdmin);
 
@@ -134,7 +134,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testUpdateGetMethod() throws Exception {
         Role role1 = new Role();
         role1.setName("ADMIN");
@@ -160,7 +160,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(email = "brown@mail.com")
+    @WithMockCustomUser(email = "nick@mail.com")
     public void testCorrectUpdatePostMethodWithRoleUSERAndCorrectPassword() throws Exception {
         when(userService.readById(anyLong())).thenReturn(userWithRoleUser);
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
@@ -190,7 +190,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testCorrectUpdatePostMethodWithRoleADMINAndCorrectPassword() throws Exception {
         when(userService.readById(anyLong())).thenReturn(userWithRoleAdmin);
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
@@ -221,7 +221,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testErrorUpdatePostMethodWithRoleADMINAndInvalidPassword() throws Exception {
         Role role1 = new Role();
         role1.setName("ADMIN");
@@ -258,7 +258,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testErrorUpdatePostMethod() throws Exception {
         Role role1 = new Role();
         role1.setName("ADMIN");
@@ -300,7 +300,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(id = 1, email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(id = 1, email = "mike@mail.com", role = "ADMIN")
     public void testDeleteGetMethodOneself() throws Exception {
         mvc.perform(get("/users/1/delete")
                 .contentType(MediaType.TEXT_HTML))
@@ -314,7 +314,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(id = 1, email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(id = 1, email = "mike@mail.com", role = "ADMIN")
     public void testDeleteGetMethodAnotherUser() throws Exception {
         mvc.perform(get("/users/2/delete")
                 .contentType(MediaType.TEXT_HTML))
@@ -328,7 +328,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testGetAllGetMethod() throws Exception {
         when(userService.getAll()).thenReturn(List.of(new User(), new User(), new User()));
 

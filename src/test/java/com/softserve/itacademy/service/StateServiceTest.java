@@ -88,6 +88,7 @@ public class StateServiceTest {
         assertEquals(expected, actual);
         verify(stateRepository, times(1)).findById(anyLong());
         verify(stateRepository, times(1)).save(expected);
+        verifyNoMoreInteractions(stateRepository);
     }
 
     @Test

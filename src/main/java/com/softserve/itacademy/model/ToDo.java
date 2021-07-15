@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "todos")
@@ -81,6 +82,19 @@ public class ToDo {
 
     public void setCollaborators(List<User> users) {
         this.collaborators = users;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToDo toDo = (ToDo) o;
+        return id == toDo.id && Objects.equals(title, toDo.title) && Objects.equals(createdAt, toDo.createdAt) && Objects.equals(owner, toDo.owner) && Objects.equals(tasks, toDo.tasks) && Objects.equals(collaborators, toDo.collaborators);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, createdAt, owner, tasks, collaborators);
     }
 
     @Override

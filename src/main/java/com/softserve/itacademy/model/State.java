@@ -3,6 +3,7 @@ package com.softserve.itacademy.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "states")
@@ -43,6 +44,19 @@ public class State {
 
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        State state = (State) o;
+        return id == state.id && Objects.equals(name, state.name) && Objects.equals(tasks, state.tasks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, tasks);
     }
 
     @Override

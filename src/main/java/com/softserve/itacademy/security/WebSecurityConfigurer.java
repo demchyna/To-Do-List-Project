@@ -14,14 +14,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(/*debug = true*/)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
-    private UsernamePasswordAuthenticationFilter authenticationFilter;
+    private final UsernamePasswordAuthenticationFilter authenticationFilter;
 
     @Autowired
-    public void setAuthenticationFilter(@Lazy UsernamePasswordAuthenticationFilter authenticationFilter) {
+    public WebSecurityConfigurer(@Lazy UsernamePasswordAuthenticationFilter authenticationFilter) {
         this.authenticationFilter = authenticationFilter;
     }
 

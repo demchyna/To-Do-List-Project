@@ -27,26 +27,8 @@ public class HomeControllerTest {
     @Autowired
     private MockMvc mvc;
 
-//    @BeforeEach
-//    public void setUp() throws Exception {
-//        Role role = new Role();
-//        role.setName("ADMIN");
-//
-//        User user = new User();
-//        user.setFirstName("Mike");
-//        user.setLastName("Green");
-//        user.setEmail("green@mail.com");
-//        user.setPassword("1111");
-//        user.setRole(role);
-//
-//        WebAuthenticationToken token = new WebAuthenticationToken(user);
-//        token.setAuthenticated(true);
-//
-//        SecurityContextHolder.getContext().setAuthentication(token);
-//    }
-
     @Test
-    @WithMockCustomUser(email = "green@mail.com", role = "ADMIN")
+    @WithMockCustomUser(email = "mike@mail.com", role = "ADMIN")
     public void testHomeGetMethod() throws Exception {
         mvc.perform(get("/home")
                 .contentType(MediaType.TEXT_HTML))

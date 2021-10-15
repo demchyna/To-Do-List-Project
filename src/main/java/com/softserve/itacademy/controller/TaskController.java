@@ -57,6 +57,7 @@ public class TaskController {
         );
         taskService.create(task);
         logger.info("Task was created");
+
         return "redirect:/todos/" + todoId + "/read";
     }
 

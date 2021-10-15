@@ -9,7 +9,7 @@ public interface StateService {
     State readById(long id);
     State update(State state);
     void delete(long id);
+    List<State> getAll();
 
     State getByName(String name);
-    List<State> getAll();
 }

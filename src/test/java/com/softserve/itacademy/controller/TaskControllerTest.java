@@ -232,6 +232,9 @@ public class TaskControllerTest {
     @Test
     @WithMockCustomUser(id = 1, email = "mike@mail.com", role = "ADMIN")
     public void testDeleteGetMethod() throws Exception {
+
+        doNothing().when(taskService).delete(anyLong());
+
         mvc.perform(get("/tasks/1/delete/todos/1")
                 .contentType(MediaType.TEXT_HTML))
                 .andExpect(status().is3xxRedirection())

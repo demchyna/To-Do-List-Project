@@ -9,7 +9,7 @@ public interface ToDoService {
     ToDo readById(long id);
     ToDo update(ToDo todo);
     void delete(long id);
-
     List<ToDo> getAll();
+
     List<ToDo> getByUserId(long userId);
 }

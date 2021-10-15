@@ -102,7 +102,7 @@ public class RoleServiceTest {
 
     @Test
     public void testDelete() {
-        when(roleRepository.findById(anyLong())).thenReturn(Optional.of(new Role()));
+        when(roleRepository.findById(anyLong())).thenReturn(Optional.of(expected));
         doNothing().when(roleRepository).delete(any(Role.class));
         roleService.delete(anyLong());
 

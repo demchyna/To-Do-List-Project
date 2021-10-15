@@ -24,9 +24,9 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
-    public State create(State role) {
-        if (role != null) {
-            return stateRepository.save(role);
+    public State create(State state) {
+        if (state != null) {
+            return stateRepository.save(state);
         }
         throw new NullEntityReferenceException("State cannot be 'null'");
     }
@@ -38,10 +38,10 @@ public class StateServiceImpl implements StateService {
     }
 
     @Override
-    public State update(State role) {
-        if (role != null) {
-            readById(role.getId());
-            return stateRepository.save(role);
+    public State update(State state) {
+        if (state != null) {
+            readById(state.getId());
+            return stateRepository.save(state);
         }
         throw new NullEntityReferenceException("State cannot be 'null'");
     }

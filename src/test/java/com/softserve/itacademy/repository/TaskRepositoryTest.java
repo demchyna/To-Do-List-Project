@@ -2,6 +2,7 @@ package com.softserve.itacademy.repository;
 
 import com.softserve.itacademy.model.Task;
 import com.softserve.itacademy.model.ToDo;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -24,6 +25,7 @@ public class TaskRepositoryTest {
     }
 
     @Test
+    @DisplayName("Get tasks by the todo ID when two tasks belong to the same todo")
     public void testGetByTodoId_1() {
         ToDo todo = new ToDo();
         todo.setTitle("test todo");
@@ -47,6 +49,7 @@ public class TaskRepositoryTest {
     }
 
     @Test
+    @DisplayName("Get tasks by the todo ID when two tasks belong to the different todo")
     public void testGetByTodoId_2() {
         ToDo todo1 = new ToDo();
         todo1.setTitle("test todo #1");
@@ -75,6 +78,7 @@ public class TaskRepositoryTest {
     }
 
     @Test
+    @DisplayName("Get tasks by the todo ID when two tasks don't belong todo")
     public void testGetByTodoId_3() {
         ToDo todo1 = new ToDo();
         todo1.setTitle("test todo #1");

@@ -12,6 +12,7 @@
     <artifactId>todolist</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ToDoList</name>
+    <packaging>war</packaging>
     <description>To-Do List demo project created with Spring Boot</description>
 
     <properties>
@@ -44,9 +45,19 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>9.4.1.jre11</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -135,6 +146,9 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <finalName>todolist</finalName>
+
     </build>
 
 </project>

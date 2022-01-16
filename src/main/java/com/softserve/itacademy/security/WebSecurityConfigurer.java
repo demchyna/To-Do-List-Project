@@ -35,7 +35,7 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.addFilterAt(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.exceptionHandling().authenticationEntryPoint(
-                (request, response, authException) -> response.sendRedirect("/login-form"));
+                (request, response, authException) -> response.sendRedirect(request.getContextPath() + "/login-form"));
     }
 
     @Bean("bCrypt")
